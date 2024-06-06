@@ -69,6 +69,11 @@ public class Board extends AggregateRoot<String> {
 		ensure(format("Workflow '%s' is committed", workflowId), () -> getCommittedWorkflow(workflowId).isPresent());
 	}
 
+	public void commitWorkflow1(String workflow1Id) {
+		committedWorkflows.add(new CommittedWorkflow(getId(), workflow1Id, committedWorkflows.size()));
+		addDomainEvent(new WorkflowCommitted(getId(), workflow1Id));
+	}
+
 
 	public void uncommitworkflow(String workflowId) {
 		requireNotNull("Workflow id", workflowId);
